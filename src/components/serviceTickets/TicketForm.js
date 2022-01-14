@@ -31,7 +31,7 @@ export const TicketForm = () => {
         return fetch("http://localhost:8088/serviceTickets", fetchOption)
         .then(response => response.json())
         .then(() => {
-            history.push("/ticket")
+            history.push("/serviceTickets")
         })
     }
 
