@@ -7,6 +7,15 @@ export const TicketList = () => {
     const [tickets, updateTickets] = useState([])
     const history = useHistory()
 
+    const deleteTicket = (id) => {
+        fetch(`http://localhost:8088/serviceTickets/${id}`, {
+            method: "DELETE"
+        })
+        .then( () => {
+            history.go("/serviceTickets")
+        })
+    }
+
     useEffect(
         () => {
             fetch("http://localhost:8088/serviceTickets?_expand=employee&_expand=customer")
@@ -17,6 +26,7 @@ export const TicketList = () => {
         },
         []
     )
+
 
     return (
         <>
@@ -29,6 +39,7 @@ export const TicketList = () => {
                                 {ticket.emergency ? "🚑 " : ""}
                                 <Link to={`/serviceTickets/${ticket.id}`}>{ticket.description}</Link> submitted by {ticket.customer.name} and {""}
                                 worked on by {ticket.employee.name}</p>
+                            <button onClick={() => {deleteTicket(ticket.id)}}>Delete</button>
                             </div>
                     }
                 )
